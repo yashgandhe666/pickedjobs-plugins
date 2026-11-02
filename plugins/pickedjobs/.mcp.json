@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "pickedjobs": {
+      "type": "http",
+      "url": "https://pickedjobs.com/mcp"
+    }
+  }
+}

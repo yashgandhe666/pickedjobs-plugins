@@ -1,0 +1,25 @@
+{
+  "name": "pickedjobs",
+  "displayName": "PickedJobs",
+  "version": "1.0.0",
+  "description": "Find and compare curated tech jobs by role, seniority, location, remote policy, stack and published salary, with full postings and application links.",
+  "author": {
+    "name": "Picked Jobs",
+    "email": "contact@pickedjobs.com",
+    "url": "https://pickedjobs.com"
+  },
+  "homepage": "https://pickedjobs.com/docs/agents",
+  "repository": "https://github.com/yashgandhe666/pickedjobs-plugins",
+  "license": "UNLICENSED",
+  "keywords": [
+    "pickedjobs",
+    "jobs",
+    "careers",
+    "job-search"
+  ],
+  "icon": "./assets/icon.png",
+  "documentationUrl": "https://pickedjobs.com/docs/agents",
+  "supportUrl": "https://pickedjobs.com/support",
+  "privacyPolicyUrl": "https://pickedjobs.com/privacy",
+  "termsOfServiceUrl": "https://pickedjobs.com/terms"
+}

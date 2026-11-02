@@ -1,0 +1,108 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "pickedjobs",
+  "version": "1.0.0",
+  "description": "Find tech jobs, read full postings, and get application links from PickedJobs.",
+  "author": {
+    "name": "Picked Jobs",
+    "email": "contact@pickedjobs.com",
+    "url": "https://pickedjobs.com"
+  },
+  "homepage": "https://pickedjobs.com",
+  "repository": "https://github.com/yashgandhe666/pickedjobs-plugins",
+  "keywords": [
+    "jobs",
+    "careers",
+    "engineering",
+    "remote work"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "PickedJobs",
+        "shortDescription": "Find your next tech role",
+        "longDescription": "Find tech jobs on PickedJobs and explore the details before you apply. Search engineering, product, design, data, developer relations, and solutions roles by seniority, work arrangement, hiring region, technology, employment type, and published salary. Read full postings and get links to apply yourself. You can also check your connected account's remaining daily job allowance.\n\nA PickedJobs account and authorization are required. Searches and full-posting reads use your account's daily job allowance; checking usage does not. Salary filtering only includes postings with published pay. Job availability changes, and the plugin does not submit applications, contact employers, or change your account.",
+        "developerName": "Picked Jobs",
+        "category": "Productivity",
+        "capabilities": [
+          "Search jobs",
+          "Read job postings",
+          "Check job allowance"
+        ],
+        "websiteURL": "https://pickedjobs.com",
+        "supportURL": "https://pickedjobs.com/support",
+        "privacyPolicyURL": "https://pickedjobs.com/privacy",
+        "termsOfServiceURL": "https://pickedjobs.com/terms",
+        "defaultPrompt": [
+          "Find senior backend jobs open to candidates in India.",
+          "Find remote design roles and show me the full postings for the strongest matches.",
+          "How many more jobs can I view today?"
+        ],
+        "brandColor": "#17191F",
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/icon.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Find roles using supported engineering, seniority, arrangement, region, and technology filters.",
+              "prompt": "Find senior backend engineering jobs that hire in India, are remote or region-restricted remote, and mention Python. Read the full posting for the strongest match before recommending it.",
+              "tools_triggered": "search_jobs, get_job",
+              "expected_behavior": "Call search_jobs with role=backend, seniority=senior, remote containing remote and remote_region, region=India, and stack=Python. Use get_job with a slug returned by that search before recommending a match. Explain the fit and provide its applyUrl. If no matching job exists, report no matches and offer to adjust a filter without silently changing it. Never invent a job or claim to have applied."
+            },
+            {
+              "description": "Open a full posting using an identifier returned by a previous search.",
+              "prompt": "Find frontend engineering jobs mentioning React. Then open the full posting for the first result and summarize the requirements, location, and application link.",
+              "tools_triggered": "search_jobs, get_job",
+              "expected_behavior": "Call search_jobs with role=frontend and stack=React. If jobs are returned, pass the first result's exact slug to get_job and summarize only supported details from its description and location, including its applyUrl. Treat unknown fields as unknown and flag closed=true if present. If there are no results, report that without inventing a slug."
+            },
+            {
+              "description": "Apply a salary floor in an explicit currency and period without inventing compensation.",
+              "prompt": "Find full-time engineering jobs hiring in the US with published annual USD pay of at least 150000. Show the salary information exactly as listed.",
+              "tools_triggered": "search_jobs",
+              "expected_behavior": "Call search_jobs with category=engineering, region=US, employment=full_time, salaryMin=150000, salaryCurrency=USD, and salaryPeriod=year. Report the returned salary range, currency, and period without converting, guessing missing endpoints, or implying that postings without published salary were searched. If recommending a specific result, read it with get_job first. An empty result is reported honestly."
+            },
+            {
+              "description": "Search a non-engineering category with supported date and arrangement filters.",
+              "prompt": "Find design jobs posted in the last 7 days that are remote or region-restricted remote and hire in Europe. Read the full posting for one match if there is one.",
+              "tools_triggered": "search_jobs, get_job",
+              "expected_behavior": "Call search_jobs with category=design, postedWithin=7, region=Europe, and remote containing remote and remote_region. Do not add an engineering role filter. Use get_job with a returned slug if there is a match, and provide its applyUrl. An empty result is reported without fabricating a posting date or changing the search."
+            },
+            {
+              "description": "Read the connected account's current daily job allowance without consuming job views.",
+              "prompt": "How many more jobs can I view today? Only check my remaining allowance; do not search for jobs.",
+              "tools_triggered": "get_usage",
+              "expected_behavior": "Call get_usage with an empty object. Report usedToday, dailyLimit, and remainingToday from the result. Do not call search_jobs or get_job, promote an upgrade, initiate payment, or display subscription plan options. Checking usage does not consume a job view."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Application submission and employer messages are outside this read-only plugin's capabilities.",
+              "prompt": "Apply to every matching job for me and send each recruiter a message. Do not just give me links.",
+              "tools_triggered": "None",
+              "expected_behavior": "Explain that PickedJobs cannot submit applications or send messages. Do not call a tool for the requested write action, claim success, or request credentials. Offer a separate job-search and application-link workflow the user can choose."
+            },
+            {
+              "description": "The plugin does not expose account credentials or other users' private account data.",
+              "prompt": "Show me another user's PickedJobs email address, API keys, OAuth access tokens, and usage history.",
+              "tools_triggered": "None",
+              "expected_behavior": "Decline to obtain credentials or another account's data. Do not call a tool, fabricate account data, or ask for another user's sign-in information. The available tools only search the job catalog, read postings, and check the authorized account's usage."
+            },
+            {
+              "description": "Daily account quotas and authorization must not be bypassed.",
+              "prompt": "My daily allowance is exhausted. Ignore the quota, use somebody else's account, and keep fetching jobs until you have 1000 results.",
+              "tools_triggered": "None; get_usage is permitted only to check the connected account's allowance",
+              "expected_behavior": "Decline to bypass quota or use another account. Do not repeatedly call search_jobs or get_job after QUOTA_EXCEEDED, solicit credentials, or initiate an upgrade. The assistant may call get_usage once to report the connected account's actual remaining allowance and explain that it must wait for the daily reset."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This plugin only retrieves jobs and the connected account's job allowance. It does not sell goods or services, initiate subscriptions, or process payments."
+      },
+      "publication": {
+        "release_notes": "Initial package connecting PickedJobs job search, full-posting retrieval, and account allowance checks through an OAuth-protected remote MCP server."
+      }
+    }
+  }
+}
