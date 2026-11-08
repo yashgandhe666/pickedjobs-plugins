@@ -22,6 +22,16 @@ The plugin source for Anthropic's directory is [`plugins/pickedjobs`](plugins/pi
 
 In ChatGPT, open **Plugins → Add custom MCP server**, name it PickedJobs, paste `https://pickedjobs.com/mcp`, choose **OAuth**, then sign in to PickedJobs and allow access. The OpenAI package in [`openai/pickedjobs`](openai/pickedjobs) is the candidate for OpenAI's plugin directory; until that listing is live, the custom server route above is the supported path.
 
+## Other agents (agent skill)
+
+For Codex, Cursor, Gemini, Hermes Agent, OpenClaw and other agents that support skills, install the PickedJobs skill from [yashgandhe666/pickedjobs-skills](https://github.com/yashgandhe666/pickedjobs-skills), also listed on [skills.sh](https://skills.sh/yashgandhe666/pickedjobs-skills/pickedjobs):
+
+```text
+npx skills add yashgandhe666/pickedjobs-skills
+```
+
+Then connect your agent to `https://pickedjobs.com/mcp` using the steps in [pickedjobs.com/docs/agents](https://pickedjobs.com/docs/agents).
+
 ## Usage and help
 
 Free accounts can fetch 250 jobs per UTC day. Every job returned by a search and every full posting read counts once; checking usage is free. See your usage, disconnect assistants and revoke keys in [Account settings](https://pickedjobs.com/account/settings). Setup details and troubleshooting: [pickedjobs.com/docs/agents](https://pickedjobs.com/docs/agents). Support: [contact@pickedjobs.com](mailto:contact@pickedjobs.com).
