@@ -17,15 +17,30 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Skip if this version is already published
+        id: check
+        run: |
+          NAME=$(jq -r .name server.json)
+          VERSION=$(jq -r .version server.json)
+          COUNT=$(curl -fsS "https://registry.modelcontextprotocol.io/v0/servers?search=${NAME}" \
+            | jq --arg n "$NAME" --arg v "$VERSION" '[.servers[].server | select(.name == $n and .version == $v)] | length')
+          if [ "$COUNT" != "0" ]; then
+            echo "$NAME@$VERSION is already published; bump version in server.json to republish."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Install mcp-publisher
+        if: steps.check.outputs.skip != 'true'
         run: |
           curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
           ./mcp-publisher --version
 
       - name: Authenticate (GitHub OIDC)
+        if: steps.check.outputs.skip != 'true'
         run: ./mcp-publisher login github-oidc
 
       - name: Publish server.json
+        if: steps.check.outputs.skip != 'true'
         run: ./mcp-publisher publish
 
       - name: Show registry entry
