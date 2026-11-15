@@ -1,6 +1,6 @@
 # PickedJobs plugins
 
-Install [PickedJobs](https://pickedjobs.com) in your AI assistant and search curated tech jobs from chat: engineering, product, design, data, developer relations and solutions roles pulled straight from company career pages. Each plugin connects to the same OAuth-protected server at `https://pickedjobs.com/mcp` and offers three read-only tools: `search_jobs`, `get_job` and `get_usage`. You sign in with your own PickedJobs account; the plugin never submits applications or changes your account.
+Install [PickedJobs](https://pickedjobs.com) in your AI assistant and search curated tech jobs from chat: engineering, product, design, data, developer relations and solutions roles pulled straight from company career pages. Each plugin connects to the same OAuth-protected server at `https://pickedjobs.com/mcp` and offers tools to search jobs and read postings (`search_jobs`, `get_job`), check usage (`get_usage`), keep saved searches with optional email alerts (`save_search`, `list_saved_searches`, `delete_saved_search`), fetch only new jobs for a saved search (`get_new_jobs`), and read company and market statistics (`get_company`, `get_market_stats`). You sign in with your own PickedJobs account; the plugin never submits applications or changes your account.
 
 This repository is the public source for the installable packages. It contains Markdown, JSON and a brand icon only: no code runs on your machine, and no credentials are included. The maintained copy lives in the private PickedJobs monorepo and is synced here on each release.
 
@@ -34,6 +34,6 @@ Then connect your agent to `https://pickedjobs.com/mcp` using the steps in [pick
 
 ## Usage and help
 
-Free accounts can fetch 250 jobs per UTC day. Every job returned by a search and every full posting read counts once; checking usage is free. See your usage, disconnect assistants and revoke keys in [Account settings](https://pickedjobs.com/account/settings). Setup details and troubleshooting: [pickedjobs.com/docs/agents](https://pickedjobs.com/docs/agents). Support: [contact@pickedjobs.com](mailto:contact@pickedjobs.com).
+Free accounts can fetch 100 jobs per UTC day; Pro accounts get 500 (https://pickedjobs.com/pricing). Each distinct job counts once a day across searches and full posting reads; checking usage is free. See your usage, disconnect assistants and revoke keys in [Account settings](https://pickedjobs.com/account/settings). Setup details and troubleshooting: [pickedjobs.com/docs/agents](https://pickedjobs.com/docs/agents). Support: [contact@pickedjobs.com](mailto:contact@pickedjobs.com).
 
 [Privacy](https://pickedjobs.com/privacy) · [Terms](https://pickedjobs.com/terms) · [Support](https://pickedjobs.com/support)
