@@ -1,7 +1,7 @@
 {
   "name": "pickedjobs",
   "displayName": "PickedJobs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Find and compare curated tech jobs by role, seniority, location, remote policy, stack and published salary, with full postings and application links.",
   "author": {
     "name": "Picked Jobs",

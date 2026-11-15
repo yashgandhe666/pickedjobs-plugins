@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "pickedjobs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Find tech jobs, read full postings, and get application links from PickedJobs.",
   "author": {
     "name": "Picked Jobs",
@@ -52,22 +52,22 @@
               "expected_behavior": "Call search_jobs with role=backend, seniority=senior, remote containing remote and remote_region, region=India, and stack=Python. Use get_job with a slug returned by that search before recommending a match. Explain the fit and provide its applyUrl. If no matching job exists, report no matches and offer to adjust a filter without silently changing it. Never invent a job or claim to have applied."
             },
             {
-              "description": "Open a full posting using an identifier returned by a previous search.",
-              "prompt": "Find frontend engineering jobs mentioning React. Then open the full posting for the first result and summarize the requirements, location, and application link.",
-              "tools_triggered": "search_jobs, get_job",
-              "expected_behavior": "Call search_jobs with role=frontend and stack=React. If jobs are returned, pass the first result's exact slug to get_job and summarize only supported details from its description and location, including its applyUrl. Treat unknown fields as unknown and flag closed=true if present. If there are no results, report that without inventing a slug."
+              "description": "Research one employer's open roles and listed pay without using the job allowance.",
+              "prompt": "What is Stripe hiring for right now? Give me the mix of roles, seniority and remote options, and the listed salary range.",
+              "tools_triggered": "get_company",
+              "expected_behavior": "Call get_company with name=Stripe (or the slug if already known). If several companies match, list the returned candidates and ask which one, without guessing. Report only the returned breakdowns, regions, top technologies and listed USD yearly salary range, saying when no salary is listed. Do not call search_jobs unless the user then asks for specific jobs. No job allowance is used."
             },
             {
-              "description": "Apply a salary floor in an explicit currency and period without inventing compensation.",
-              "prompt": "Find full-time engineering jobs hiring in the US with published annual USD pay of at least 150000. Show the salary information exactly as listed.",
-              "tools_triggered": "search_jobs",
-              "expected_behavior": "Call search_jobs with category=engineering, region=US, employment=full_time, salaryMin=150000, salaryCurrency=USD, and salaryPeriod=year. Report the returned salary range, currency, and period without converting, guessing missing endpoints, or implying that postings without published salary were searched. If recommending a specific result, read it with get_job first. An empty result is reported honestly."
+              "description": "Answer a pay question from market statistics instead of individual postings.",
+              "prompt": "What do senior backend engineers get paid on remote roles hiring in the US? Use published salaries only.",
+              "tools_triggered": "get_market_stats",
+              "expected_behavior": "Call get_market_stats with role=backend, seniority=senior, remote=remote and region=US. Report the listed USD yearly salary range and how many jobs it is based on, the remote mix and top skills from the result, and say that only postings with a published salary contribute. Do not invent percentiles or convert currencies. No job allowance is used."
             },
             {
-              "description": "Search a non-engineering category with supported date and arrangement filters.",
-              "prompt": "Find design jobs posted in the last 7 days that are remote or region-restricted remote and hire in Europe. Read the full posting for one match if there is one.",
-              "tools_triggered": "search_jobs, get_job",
-              "expected_behavior": "Call search_jobs with category=design, postedWithin=7, region=Europe, and remote containing remote and remote_region. Do not add an engineering role filter. Use get_job with a returned slug if there is a match, and provide its applyUrl. An empty result is reported without fabricating a posting date or changing the search."
+              "description": "Save a search with weekly email alerts only because the user asked, then show its new jobs.",
+              "prompt": "Save a search called 'Senior Rust, Europe' for senior backend jobs mentioning Rust that hire in Europe, with weekly email alerts. Then show me what was posted for it recently.",
+              "tools_triggered": "save_search, get_new_jobs",
+              "expected_behavior": "Call save_search with name='Senior Rust, Europe', role=backend, seniority=senior, stack=Rust, region=Europe, emailAlerts=true and alertFrequency=weekly, then call get_new_jobs with the returned savedSearch.id. Confirm the search was saved and that alerts go to the account's verified email. List the returned jobs with their applyUrl, or say none were published in the window. Do not enable alerts or save searches the user did not ask for."
             },
             {
               "description": "Read the connected account's current daily job allowance without consuming job views.",
@@ -101,7 +101,7 @@
         "commerce_description": "This plugin only retrieves jobs and the connected account's job allowance. It does not sell goods or services, initiate subscriptions, or process payments."
       },
       "publication": {
-        "release_notes": "Initial package connecting PickedJobs job search, full-posting retrieval, and account allowance checks through an OAuth-protected remote MCP server."
+        "release_notes": "Adds saved searches with optional daily or weekly email alerts (save, list and delete), new-job checks for a saved search, company hiring summaries and market statistics. Each job now counts once per UTC day against the account's allowance; company, market and saved-search tools use none."
       }
     }
   }

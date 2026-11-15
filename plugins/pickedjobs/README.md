@@ -27,8 +27,11 @@ Try: “Find senior backend roles I can work from India, preferably remote, usin
 - `search_jobs` filters open jobs and returns summaries and links.
 - `get_job` returns one full posting, including its description and application link.
 - `get_usage` shows your remaining daily job quota.
+- `save_search`, `list_saved_searches` and `delete_saved_search` manage saved searches on your account, with optional daily or weekly email alerts.
+- `get_new_jobs` returns only jobs published since the last check of a saved search.
+- `get_company` and `get_market_stats` summarize a company's hiring or the wider market: roles, seniority, regions, top skills and listed salaries.
 
-Search returns up to 30 jobs per page. Each returned job and each full-posting fetch count against your PickedJobs daily quota, even if the posting appeared in a previous search. Checking usage is free. A salary filter excludes postings without published pay. Remote roles may still restrict eligible regions. The skill helps conserve quota and labels missing information.
+Search returns up to 30 jobs per page. Each distinct job counts once per UTC day against your PickedJobs daily quota, whether it arrives in a search, a full posting or a new-jobs check; seeing it again that day is free. Free accounts get 100 jobs a day and Pro accounts 500. Checking usage, saved searches, company and market statistics are free. A salary filter excludes postings without published pay. Remote roles may still restrict eligible regions. The skill helps conserve quota and labels missing information.
 
 The plugin does not apply to jobs, message employers, save a shortlist in your account, create alerts or promise employment. Applications happen through links you choose to open.
 
