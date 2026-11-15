@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "pickedjobs",
-  "version": "1.1.0",
-  "description": "Find tech jobs, read full postings, and get application links from PickedJobs.",
+  "version": "1.1.1",
+  "description": "Find tech jobs, read full postings, save searches with alerts, and research companies and pay on PickedJobs.",
   "author": {
     "name": "Picked Jobs",
     "email": "contact@pickedjobs.com",
@@ -21,12 +21,16 @@
       "interface": {
         "displayName": "PickedJobs",
         "shortDescription": "Find your next tech role",
-        "longDescription": "Find tech jobs on PickedJobs and explore the details before you apply. Search engineering, product, design, data, developer relations, and solutions roles by seniority, work arrangement, hiring region, technology, employment type, and published salary. Read full postings and get links to apply yourself. You can also check your connected account's remaining daily job allowance.\n\nA PickedJobs account and authorization are required. Searches and full-posting reads use your account's daily job allowance; checking usage does not. Salary filtering only includes postings with published pay. Job availability changes, and the plugin does not submit applications, contact employers, or change your account.",
+        "longDescription": "Find tech jobs on PickedJobs and explore the details before you apply. Search engineering, product, design, data, developer relations, and solutions roles by seniority, work arrangement, hiring region, technology, employment type, and published salary. Read full postings and get links to apply yourself.\n\nSave searches to your PickedJobs account, with optional daily or weekly email alerts to your verified account email, and check a saved search for recently published jobs. Look up one company's open roles and listed pay, or market statistics such as pay by seniority, remote share, hiring regions, and top skills. You can also check your account's remaining daily job allowance.\n\nA PickedJobs account and authorization are required. Each job counts once per day against your account's daily job allowance; saved-search, company, market, and usage tools do not use it. Salary filtering only includes postings with published pay. Job availability changes, and the plugin does not submit applications or contact employers. The only account changes it makes are saving or deleting searches and their email alerts, when you ask.",
         "developerName": "Picked Jobs",
         "category": "Productivity",
         "capabilities": [
           "Search jobs",
           "Read job postings",
+          "Save searches with email alerts",
+          "Check new jobs for a saved search",
+          "Company hiring summaries",
+          "Job market and salary statistics",
           "Check job allowance"
         ],
         "websiteURL": "https://pickedjobs.com",
@@ -35,8 +39,8 @@
         "termsOfServiceURL": "https://pickedjobs.com/terms",
         "defaultPrompt": [
           "Find senior backend jobs open to candidates in India.",
-          "Find remote design roles and show me the full postings for the strongest matches.",
-          "How many more jobs can I view today?"
+          "What is Stripe hiring for right now, and what does it pay?",
+          "Save a search for remote React jobs and email me weekly."
         ],
         "brandColor": "#17191F",
         "composerIcon": "./assets/icon.png",
