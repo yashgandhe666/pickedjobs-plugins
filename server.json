@@ -3,12 +3,26 @@
   "name": "io.github.yashgandhe666/pickedjobs",
   "title": "PickedJobs",
   "description": "Search curated tech jobs, save searches with email alerts, check new jobs, company and pay stats.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "websiteUrl": "https://pickedjobs.com/docs/agents",
   "remotes": [
     {
       "type": "streamable-http",
       "url": "https://pickedjobs.com/mcp"
     }
-  ]
+  ],
+  "icons": [
+    {
+      "src": "https://pickedjobs.com/favicon-512.png",
+      "mimeType": "image/png",
+      "sizes": [
+        "512x512"
+      ]
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/yashgandhe666/pickedjobs-plugins",
+    "source": "github",
+    "id": "1442454979"
+  }
 }
